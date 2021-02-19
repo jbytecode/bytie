@@ -1,5 +1,5 @@
 # bot.py
-import bytie.messagehandle
+import messagehandle
 
 import os
 import ast
@@ -35,17 +35,17 @@ async def on_message(message):
     incoming = message.content
 
     if incoming.startswith('hey bytie!'):
-        response = bytie.messagehandle.bytie_handle_hey_bytie()
+        response = messagehandle.bytie_handle_hey_bytie()
         await message.channel.send(response)
 
     if incoming.startswith("latex "):
         cmd = incoming[6:]
-        response = bytie.messagehandle.bytie_handle_latex(cmd)
+        response = messagehandle.bytie_handle_latex(cmd)
         await message.channel.send(response)
 
     if incoming.startswith("ast "):
         cmd = ast.parse(incoming[4:])
-        result = bytie.messagehandle.bytie_handle_ast(cmd)
+        result = messagehandle.bytie_handle_ast(cmd)
         await message.channel.send(result)
 
 

@@ -12,4 +12,4 @@ def bytie_handle_ast(command: str) -> str:
 
 
 def bytie_handle_latex(command: str) -> str:
-    return "https://latex.codecogs.com/gif.latex?" + command
+    return "https://latex.codecogs.com/png.latex?" + command
