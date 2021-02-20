@@ -2,7 +2,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-max_iter = 80
+max_iter = 200
 divergence_radius = 4
 canvas_shape = (600, 600)
 
