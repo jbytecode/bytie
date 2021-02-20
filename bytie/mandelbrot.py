@@ -5,7 +5,7 @@ from PIL import Image
 canvas_shape = (600, 600)
 
 
-def mandel_iter(canvas, max_iter, div_radius):
+def mandel_iter(canvas, max_iter, divergence_radius):
 
     real_c, cmplx_c = canvas
     real_z, cmplx_z = np.zeros(canvas_shape, dtype="float64"), np.zeros(
