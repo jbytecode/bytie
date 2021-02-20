@@ -111,8 +111,8 @@ def bytie_handle_mandelbrot(command: str) -> str:
         x = float(args[1])
         y = float(args[2])
         zoom = float(args[3])
-	max_iter = int(args[4])
-	divergance_radius = float(args[5])
+        max_iter = int(args[4])
+        divergance_radius = float(args[5])
     except:
         return "Please feed a zoom and a center paramter! Also maximum number of iterations and divergance radius!"
 
