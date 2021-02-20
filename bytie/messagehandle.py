@@ -3,7 +3,6 @@ import requests
 import hashlib
 import random
 import re
-import os 
 from numpy import fromstring, array2string
 from numpy.fft import fft
 
@@ -104,7 +103,7 @@ def bytie_handle_fftCalc(xs: str) -> str:
 
 def bytie_handle_mandelbrot(command: str) -> str:
     """
-    mandelbrot <x> <y> <zoom>
+    mandelbrot <x> <y> <zoom> <max_iter> <divergance_radius>
 
     """
     args = command.split()
@@ -112,17 +111,19 @@ def bytie_handle_mandelbrot(command: str) -> str:
         x = float(args[1])
         y = float(args[2])
         zoom = float(args[3])
+	max_iter = int(args[4])
+	divergance_radius = float(args[5])
     except:
-        return "Please feed a zoom and a center paramter!"
+        return "Please feed a zoom and a center paramter! Also maximum number of iterations and divergance radius!"
 
-    HOST = os.getenv("BYTIE_HOST")
-    PATH = os.getenv("BYTIE_PATH")
+    HOST = os.getenv("HOST")
+    PATH = os.getenv("PATH")
 
-    filename = f"image_{x}_{y}_{zoom}.png"
+    filename = f"image_{x}_{y}_{zoom}_{max_iter}_{divergance_radius}.png"
     filepath = f"{PATH}/{filename}"
     url = f"{HOST}/{filename}"
 
-    mandelbrot.mandelbrot(zoom=zoom, center=(x, y), filename=filepath)
+    mandelbrot.mandelbrot(zoom=zoom, center=(x, y), filename=filepath, max_iter=max_iter, div_radius=divergance_radius)
 
     return url
 
