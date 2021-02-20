@@ -47,6 +47,11 @@ async def on_message(message):
         cmd = ast.parse(incoming[4:])
         result = messagehandle.bytie_handle_ast(cmd)
         await message.channel.send(result)
+    
+    if incoming.startswith("8ball "):
+        cmd = incoming[6:]
+        result = messagehandle.bytie_handle_8ball(cmd)
+        await message.channel.send(result)
 
 
 client.run(TOKEN)
