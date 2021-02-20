@@ -3,6 +3,8 @@ import requests
 import hashlib
 import random
 import re
+import os
+
 from numpy import fromstring, array2string
 from numpy.fft import fft
 
@@ -116,8 +118,8 @@ def bytie_handle_mandelbrot(command: str) -> str:
     except:
         return "Please feed a zoom and a center paramter! Also maximum number of iterations and divergance radius!"
 
-    HOST = os.getenv("HOST")
-    PATH = os.getenv("PATH")
+    HOST = os.getenv("BYTIE_HOST")
+    PATH = os.getenv("BYTIE_PATH")
 
     filename = f"image_{x}_{y}_{zoom}_{max_iter}_{divergance_radius}.png"
     filepath = f"{PATH}/{filename}"
