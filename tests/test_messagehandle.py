@@ -16,6 +16,13 @@ class TestMessageHandler(TestCase):
             bytie.messagehandle.bytie_handle_ast(cmd),
             "Module(body=[Expr(value=Constant(value=4))], type_ignores=[])")
 
+    def test_iplikisyin(self):
+        content = "Ama Java'da Multiple Inheritance yok ki"
+        result = bytie.messagehandle.bytie_handle_iplikisyin(content)
+        iplikisyin = "imi jivi'di miltipli inhiritinci yik ki :rofl:"
+        oplokosyon = "omo jovo'do moltoplo onhorotonco yok ko :rofl:"
+        self.assertIn(result, [iplikisyin, oplokosyon])
+
     @patch('requests.get')
     def test_dadjoke_success(self, mock_requests_get):
         mock_requests_get.return_value.status_code = 200

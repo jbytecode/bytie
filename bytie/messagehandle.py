@@ -1,6 +1,8 @@
 import ast
 import requests
 import hashlib
+import random
+import re
 
 def bytie_handle_hey_bytie() -> str:
     return "Yes, sir!"
@@ -56,6 +58,13 @@ def bytie_handle_saysomethingnew() -> str:
       return resp.text.split('\n')[0]
     else:
       return 'failatun failun failure :('
+
+def bytie_handle_iplikisyin(message: str) -> str:
+    vowels = r"[aeıioöuü]"
+    choice = random.choice("io")
+    result = re.sub(vowels, choice, message.lower()) + " :rofl:" 
+    return result
+
 
 def bytie_handle_help() -> str:
     help_str = """
