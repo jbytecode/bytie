@@ -62,6 +62,10 @@ async def on_message(message):
         result = messagehandle.bytie_handle_saysomethingnew()
         await message.channel.send(result)
 
+	if incoming == "usd":
+		result = messagehandle.bytie_handle_dolar()
+		await message.channel.send(result)
+
     if random.random() <= 0.05:
         result = messagehandle.bytie_handle_iplikisyin(incoming)
         await message.channel.send(result)

@@ -65,6 +65,11 @@ def bytie_handle_iplikisyin(message: str) -> str:
     result = re.sub(vowels, choice, message.lower()) + " :rofl:" 
     return result
 
+def bytie_handle_dolar():
+    webcontent = requests.get("https://themoneyconverter.com/USD/TRY").text
+    parsed1 = webcontent.split("1 USD = ")
+    dolartl = parsed1[1].split(" ")[0]
+    return dolartl
 
 def bytie_handle_help() -> str:
     help_str = """
@@ -89,6 +94,9 @@ def bytie_handle_help() -> str:
 
         - say something new
                 Let me pick new things!
+
+		- usd
+				Price of USD in Turkish Liras
 
         - bytie help!
                 this.help();
