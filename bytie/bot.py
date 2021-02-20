@@ -3,6 +3,7 @@ import messagehandle
 
 import os
 import ast
+import random
 
 
 import discord
@@ -59,6 +60,10 @@ async def on_message(message):
 
     if incoming.startswith("say something new"):
         result = messagehandle.bytie_handle_saysomethingnew()
+        await message.channel.send(result)
+
+    if random.random() <= 0.01:
+        result = messagehandle.bytie_handle_iplikisyin(incoming)
         await message.channel.send(result)
 
     if incoming.startswith("bytie help!"):
