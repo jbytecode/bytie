@@ -87,5 +87,10 @@ async def on_message(message):
         result = messagehandle.bytie_handle_fftCalc(xs)
         await message.channel.send(result)
 
+    if incoming.startswith("XTRY "):
+        currency = incoming[5:8].upper()
+        result = messagehandle.bytie_handle_XTRY(currency)
+        await message.channel.send(result)
+
 
 client.run(TOKEN)
