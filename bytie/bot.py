@@ -48,7 +48,7 @@ async def on_message(message):
         cmd = ast.parse(incoming[4:])
         result = messagehandle.bytie_handle_ast(cmd)
         await message.channel.send(result)
-    
+
     if incoming.startswith("8ball "):
         cmd = incoming[6:]
         result = messagehandle.bytie_handle_8ball(cmd)
@@ -62,9 +62,9 @@ async def on_message(message):
         result = messagehandle.bytie_handle_saysomethingnew()
         await message.channel.send(result)
 
-	if incoming == "usd":
-		result = messagehandle.bytie_handle_dolar()
-		await message.channel.send(result)
+    if incoming == "usd":
+        result = messagehandle.bytie_handle_dolar()
+        await message.channel.send(result)
 
     if random.random() <= 0.05:
         result = messagehandle.bytie_handle_iplikisyin(incoming)
