@@ -3,6 +3,7 @@ import requests
 import hashlib
 import random
 import re
+import os 
 
 import mandelbrot
 
@@ -100,8 +101,8 @@ def bytie_handle_mandelbrot(command: str) -> str:
     except:
         return "Please feed a zoom and a center paramter!"
 
-    HOST = os.getenv("HOST")
-    PATH = os.getenv("PATH")
+    HOST = os.getenv("BYTIE_HOST")
+    PATH = os.getenv("BYTIE_PATH")
 
     filename = f"image_{x}_{y}_{zoom}.png"
     filepath = f"{PATH}/{filename}"
