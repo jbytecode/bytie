@@ -73,4 +73,12 @@ async def on_message(message):
     if incoming.startswith("bytie help!"):
         await message.channel.send(messagehandle.bytie_handle_help())
 
+    if incoming == "fft?":
+        await message.channel.send(messagehandle.bytie_handle_fft())
+
+    if incoming.startswith("fft "):
+        xs = incoming[4:]
+        result = messagehandle.bytie_handle_fftCalc(xs)
+        await message.channel.send(result)
+
 client.run(TOKEN)

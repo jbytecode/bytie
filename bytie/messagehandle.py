@@ -3,6 +3,8 @@ import requests
 import hashlib
 import random
 import re
+from numpy import fromstring, array2string
+from numpy.fft import fft
 
 def bytie_handle_hey_bytie() -> str:
     return "Yes, sir!"
@@ -70,6 +72,19 @@ def bytie_handle_dolar():
     parsed1 = webcontent.split("1 USD = ")
     dolartl = parsed1[1].split(" ")[0]
     return dolartl
+
+def bytie_handle_fft():
+    return "lib var"
+
+def bytie_handle_fftCalc(xs: str) -> str:
+    if ',' in xs:
+        xs = fromstring(xs, dtype=float, sep=",")
+    else:
+        xs = fromstring(xs, dtype=float, sep=" ")
+    if xs.size > 0:    
+        return array2string(fft(xs), precision=2)
+    else:
+        return "meh"
 
 def bytie_handle_help() -> str:
     help_str = """
