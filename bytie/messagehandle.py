@@ -148,6 +148,10 @@ def bytie_handle_help() -> str:
 		- usd: Price of USD in Turkish Liras
 
         - mandelbrot ${x} ${y} ${zoom} : I generate a mandelbrot image for you. 
+	
+	- fft?: I tell you top secret information about fft.
+	
+	- fft <',' or ' ' seperated numbers>: I calculate fft of your numbers.
 
         - bytie help!: this.help();
 
