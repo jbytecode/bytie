@@ -1,4 +1,5 @@
 import ast
+import requests
 import hashlib
 
 def bytie_handle_hey_bytie() -> str:
@@ -41,6 +42,13 @@ def bytie_handle_8ball(command: str) -> str:
     number = int(hashlib.sha1(command.encode("utf-8")).hexdigest(), 16)
     return eight_ball_messages[number % len(eight_ball_messages)]
 
+def bytie_handle_dadjoke() -> str:
+    resp = requests.get('https://icanhazdadjoke.com', headers={'Accept': 'application/json'})
+    if resp.status_code == 200:
+      joke_id = resp.json()['id']
+      return f'https://icanhazdadjoke.com/j/{joke_id}.png'
+    else:
+      return 'Couldn\'t get a dadjoke :('
 
 def bytie_handle_help() -> str:
     help_str = """
@@ -59,6 +67,9 @@ def bytie_handle_help() -> str:
         - 8ball ${question}
                 I deeply analyze your question and give a comprehensive answer. 
                 Ersagun did this patch. 
+
+        - dadjoke
+                I prepare a top quality joke for you. 
 
         - bytie help!
                 this.help();
