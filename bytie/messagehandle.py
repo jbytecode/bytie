@@ -50,6 +50,13 @@ def bytie_handle_dadjoke() -> str:
     else:
       return 'Couldn\'t get a dadjoke :('
 
+def bytie_handle_saysomethingnew() -> str:
+    resp = requests.get('https://uselessfacts.jsph.pl/random.txt?language=en')
+    if resp.status_code == 200:
+      return resp.text.split('\n')[0]
+    else:
+      return 'failatun failun failure :('
+
 def bytie_handle_help() -> str:
     help_str = """
 
@@ -70,6 +77,9 @@ def bytie_handle_help() -> str:
 
         - dadjoke
                 I prepare a top quality joke for you. 
+
+        - say something new
+                Let me pick new things!
 
         - bytie help!
                 this.help();

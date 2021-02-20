@@ -57,6 +57,10 @@ async def on_message(message):
         result = messagehandle.bytie_handle_dadjoke()
         await message.channel.send(result)
 
+    if incoming.startswith("say something new"):
+        result = messagehandle.bytie_handle_saysomethingnew()
+        await message.channel.send(result)
+
     if incoming.startswith("bytie help!"):
         await message.channel.send(messagehandle.bytie_handle_help())
 
