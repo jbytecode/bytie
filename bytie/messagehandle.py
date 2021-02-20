@@ -130,9 +130,12 @@ def bytie_handle_mandelbrot(command: str) -> str:
     return url
 
 def bytie_handle_XTRY(currency):
-    r = requests.get("https://api.exchangeratesapi.io/latest?base=TRY")
-    XTRY = 1/r.json()['rates'][currency]
-    return f"{currency}TRY: {XTRY:.2f}"
+    r = requests.get("https://api.exchangeratesapi.io/latest?base=TRY").json()["rates"]
+    if currency in r:
+        XTRY = 1/r[currency]
+        return f"{currency}TRY: {XTRY:.2f}"
+    else:
+        return "Please enter a valid currency abbrevation"
 
 def bytie_handle_help() -> str:
     help_str = """
