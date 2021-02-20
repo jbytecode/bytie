@@ -47,7 +47,7 @@ def bytie_handle_help() -> str:
 
         Welcome, I am the bot of this channel. Try typing:
 
-        - hey pytie!
+        - hey bytie!
                 I say 'Yes, sir!'
 
         - ast ${python code}
@@ -57,7 +57,7 @@ def bytie_handle_help() -> str:
                 I generate LaTeX equations
 
         - 8ball ${question}
-                I deeply analysis your question and give a comprehensive answer. 
+                I deeply analyze your question and give a comprehensive answer. 
                 Ersagun did this patch. 
 
         - bytie help!
