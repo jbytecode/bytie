@@ -64,6 +64,10 @@ async def on_message(message):
         result = messagehandle.bytie_handle_dolar()
         await message.channel.send(result)
 
+    if incoming.startswith("bytie shutdown!"):
+        await message.channel.send("Goodbye cruel world!")
+        exit()
+
     if random.random() <= 0.05:
         result = messagehandle.bytie_handle_iplikisyin(incoming)
         await message.channel.send(result)
