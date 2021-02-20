@@ -3,6 +3,8 @@ import requests
 import hashlib
 import random
 import re
+from numpy import fromstring, array2string
+from numpy.fft import fft
 
 import mandelbrot
 
@@ -86,6 +88,18 @@ def bytie_handle_dolar():
     dolartl = parsed1[1].split(" ")[0]
     return dolartl
 
+def bytie_handle_fft():
+    return "lib var"
+
+def bytie_handle_fftCalc(xs: str) -> str:
+    if ',' in xs:
+        xs = fromstring(xs, dtype=float, sep=",")
+    else:
+        xs = fromstring(xs, dtype=float, sep=" ")
+    if xs.size > 0:    
+        return array2string(fft(xs), precision=2)
+    else:
+        return "meh"
 
 def bytie_handle_mandelbrot(command: str) -> str:
     """
@@ -110,6 +124,7 @@ def bytie_handle_mandelbrot(command: str) -> str:
     mandelbrot.mandelbrot(zoom=zoom, center=(x, y), filename=filepath)
 
     return url
+
 
 
 def bytie_handle_help() -> str:
