@@ -53,5 +53,7 @@ async def on_message(message):
         result = messagehandle.bytie_handle_8ball(cmd)
         await message.channel.send(result)
 
+    if incoming.startswith("bytie help!"):
+        await message.channel.send(messagehandle.bytie_handle_help())
 
 client.run(TOKEN)

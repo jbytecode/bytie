@@ -40,3 +40,30 @@ eight_ball_messages = [
 def bytie_handle_8ball(command: str) -> str:
     number = int(hashlib.sha1(command.encode("utf-8")).hexdigest(), 16)
     return eight_ball_messages[number % len(eight_ball_messages)]
+
+
+def bytie_handle_help() -> str:
+    help_str = """
+
+        Welcome, I am the bot of this channel. Try typing:
+
+        - hey pytie!
+                I say 'Yes, sir!'
+
+        - ast ${python code}
+                I generate abstract syntax trees 
+
+        - latex ${equation}
+                I generate LaTeX equations
+
+        - 8ball ${question}
+                I deeply analysis your question and give a comprehensive answer. 
+                Ersagun did this patch. 
+
+        - bytie help!
+                this.help();
+
+    """
+    return help_str
+
+
