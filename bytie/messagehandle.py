@@ -129,7 +129,13 @@ def bytie_handle_mandelbrot(command: str) -> str:
 
     return url
 
-
+def bytie_handle_XTRY(currency):
+    r = requests.get("https://api.exchangeratesapi.io/latest?base=TRY").json()["rates"]
+    if currency in r:
+        XTRY = 1/r[currency]
+        return f"{currency}TRY: {XTRY:.2f}"
+    else:
+        return "Please enter a valid currency abbrevation"
 
 def bytie_handle_help() -> str:
     help_str = """
@@ -151,9 +157,11 @@ def bytie_handle_help() -> str:
 
         - mandelbrot ${x} ${y} ${zoom} : I generate a mandelbrot image for you. 
 	
-	- fft?: I tell you top secret information about fft.
+	    - fft?: I tell you top secret information about fft.
 	
-	- fft <',' or ' ' seperated numbers>: I calculate fft of your numbers.
+	    - fft <',' or ' ' seperated numbers>: I calculate fft of your numbers.
+
+        - XTRY ${abbr. of currency}: Price of a currency in Turkish Liras
 
         - bytie help!: this.help();
 
