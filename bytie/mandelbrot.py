@@ -2,12 +2,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from PIL import Image
 
-max_iter = 200
-divergence_radius = 4
 canvas_shape = (600, 600)
 
 
-def mandel_iter(canvas):
+def mandel_iter(canvas, max_iter, div_radius):
 
     real_c, cmplx_c = canvas
     real_z, cmplx_z = np.zeros(canvas_shape, dtype="float64"), np.zeros(
@@ -45,7 +43,7 @@ def mandel_iter(canvas):
     return iter_array
 
 
-def mandelbrot(zoom=0.5, center=(0, 0), filename="deneme.png"):
+def mandelbrot(zoom=0.5, center=(0, 0), filename="deneme.png", max_iter=200, div_radius=4):
     _extents = 2 / (2 ** zoom)
 
     x_lim = [center[0] - _extents, center[0] + _extents]
@@ -60,7 +58,7 @@ def mandelbrot(zoom=0.5, center=(0, 0), filename="deneme.png"):
     )
     canvas_cmplx = np.repeat(y_range[::-1, :], canvas_shape[1], axis=1)
 
-    res = mandel_iter((canvas_real, canvas_cmplx))
+    res = mandel_iter((canvas_real, canvas_cmplx), max_iter, div_radius)
 
     plt.imshow(res)
     plt.set_cmap("hot")
