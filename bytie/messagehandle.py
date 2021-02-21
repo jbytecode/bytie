@@ -137,6 +137,22 @@ def bytie_handle_XTRY(currency):
     else:
         return "Please enter a valid currency abbrevation"
 
+def bytie_handle_xkcd(n):
+    r = requests.get(f"https://xkcd.com/{n}/info.0.json")
+    if r.status_code == 200:
+        return r.json()["img"]
+    else:
+        return f"Two possibilities exist: either xkcd down or xkcd {n} does not exist. Both are equally terrifying."
+
+def bytie_handle_randomxkcd():
+    r = requests.get(f"https://xkcd.com/info.0.json")
+    if r.status_code == 200:
+        maxkcd = r.json()["num"]
+        rnd = random.randint(1,maxkcd)
+        return (bytie_handle_xkcd(rnd))
+    else:
+        return f"xkcd down :/"
+
 def bytie_handle_help() -> str:
     help_str = """
         Welcome, I am the bot of this channel. Try typing:
@@ -162,6 +178,8 @@ def bytie_handle_help() -> str:
 	    - fft <',' or ' ' seperated numbers>: I calculate fft of your numbers.
 
         - XTRY ${abbr. of currency}: Price of a currency in Turkish Liras
+
+        - xkcd {num}: I show you the xkcd you specified. Random xkcd for bad inputs.
 
         - bytie help!: this.help();
 
