@@ -5,7 +5,7 @@ import random
 import re
 import os
 import glob
-
+from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
 
@@ -125,9 +125,8 @@ def bytie_handle_mandelbrot(command: str) -> str:
     filename = f"image_{x}_{y}_{zoom}_{max_iter}_{divergance_radius}.png"
     filepath = f"{PATH}/{filename}"
     url = f"{HOST}/{filename}"
-
-    mandelbrot.mandelbrot(zoom=zoom, center=(x, y), filename=filepath, max_iter=max_iter, div_radius=divergance_radius)
-
+    if not(path.exists(filepath)):
+        mandelbrot.mandelbrot(zoom=zoom, center=(x, y), filename=filepath, max_iter=max_iter, div_radius=divergance_radius)
     return url
 
 def bytie_handle_XTRY(currency):
@@ -187,7 +186,7 @@ def bytie_handle_help() -> str:
 
         - XTRY ${abbr. of currency}: Price of a currency in Turkish Liras
 
-        - xkcd {num}: I show you the xkcd you specified. Random xkcd for bad inputs.
+        - !xkcd {num}: I show you the xkcd you specified. Random xkcd for bad inputs.
 
         - bytie clean temp!: Trig my garbage collector!
 
