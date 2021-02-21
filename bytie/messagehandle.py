@@ -265,7 +265,7 @@ if __name__ == '__main__':
         "test : tests @message_handler functionality"
         return message + ', indeed.'
     while True:
-        text = input()
+        text = input("bytie> ")
         for handler in message_handlers:
             message = handler['handler'](text)
             if message:
