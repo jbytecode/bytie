@@ -92,5 +92,13 @@ async def on_message(message):
         result = messagehandle.bytie_handle_XTRY(currency)
         await message.channel.send(result)
 
+    if incoming.startswith("!xkcd"):
+        tail = incoming[6:]
+        try:
+            nxkcd = int(tail)
+            result = messagehandle.bytie_handle_xkcd(nxkcd)
+        except(ValueError, TypeError):
+            result = messagehandle.bytie_handle_randomxkcd()
+        await message.channel.send(result)
 
 client.run(TOKEN)
