@@ -123,7 +123,7 @@ def bytie_handle_dadjoke(command: str) -> str:
 
 
 @message_handler("say something new", prefix=False)
-def bytie_handle_saysomethingnew() -> str:
+def bytie_handle_saysomethingnew(message: str) -> str:
     "say something new: Let me pick new things!"
     resp = requests.get("https://uselessfacts.jsph.pl/random.txt?language=en")
     if resp.status_code == 200:
@@ -142,7 +142,7 @@ def bytie_handle_iplikisyin(message: str) -> str:
 
 
 @message_handler("usd", prefix=False)
-def bytie_handle_dolar():
+def bytie_handle_dolar(message: str) -> str:
     "usd: Price of USD in Turkish Liras"
     webcontent = requests.get("https://themoneyconverter.com/USD/TRY").text
     parsed1 = webcontent.split("1 USD = ")
@@ -151,7 +151,7 @@ def bytie_handle_dolar():
 
 
 @message_handler("fft?", prefix=False)
-def bytie_handle_fft(message: str):
+def bytie_handle_fft(message: str) -> str:
     "fft?: I tell you top secret information about fft."
     return "lib var"
 
@@ -243,7 +243,7 @@ def bytie_handle_clean_temp(message: str) -> str:
 
 
 @message_handler('bytie help!', prefix=False)
-def bytie_handle_help(message:str) -> str:
+def bytie_handle_help(message: str) -> str:
     "bytie help! : Do you really need more help?"
     docs = []
     for handler in message_handlers:
@@ -252,8 +252,9 @@ def bytie_handle_help(message:str) -> str:
     docs = "".join(docs)
     return f"Welcome, I am the bot of this channel. Try typing:{docs}"
 
+
 @message_handler('python', prefix=False)
-def bytie_handle_python(message:str) -> str:
+def bytie_handle_python(message: str) -> str:
     "python: I tell you the objective truth about python."
     return "python is bad, and you should feel bad."
 
