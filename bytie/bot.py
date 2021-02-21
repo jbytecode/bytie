@@ -38,9 +38,9 @@ async def on_message(message):
         exit()
 
     for handler in message_handlers:
-        message = handler['handler'](incoming)
-        if message:
-            message.channel.send(message)
+        msg = handler['handler'](incoming)
+        if msg:
+            await message.channel.send(msg)
 
 
 client.run(TOKEN)
