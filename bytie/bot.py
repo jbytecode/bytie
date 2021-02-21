@@ -101,4 +101,8 @@ async def on_message(message):
             result = messagehandle.bytie_handle_randomxkcd()
         await message.channel.send(result)
 
+    if incoming.startswith("bytie clean temp!"):
+        result = bytie_handle_clean_temp()
+        await message.channel.send(result)
+
 client.run(TOKEN)

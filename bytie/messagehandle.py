@@ -4,6 +4,7 @@ import hashlib
 import random
 import re
 import os
+import glob
 
 from numpy import fromstring, array2string
 from numpy.fft import fft
@@ -153,6 +154,12 @@ def bytie_handle_randomxkcd():
     else:
         return f"xkcd down :/"
 
+def bytie_handle_clean_temp()->str:
+    files = glob.glob(os.getenv("BYTIE_PATH"))
+    for f in files:
+        os.remove(f)
+    return f"I removed {L} garbage(s)"
+
 def bytie_handle_help() -> str:
     help_str = """
         Welcome, I am the bot of this channel. Try typing:
@@ -180,6 +187,8 @@ def bytie_handle_help() -> str:
         - XTRY ${abbr. of currency}: Price of a currency in Turkish Liras
 
         - xkcd {num}: I show you the xkcd you specified. Random xkcd for bad inputs.
+
+        - bytie clean temp!: Trig my garbage collector!
 
         - bytie help!: this.help();
 
