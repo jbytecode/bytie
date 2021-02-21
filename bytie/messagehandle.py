@@ -155,9 +155,10 @@ def bytie_handle_randomxkcd():
         return f"xkcd down :/"
 
 def bytie_handle_clean_temp()->str:
-    files = glob.glob(os.getenv("BYTIE_PATH"))
+    files = glob.glob(os.getenv("BYTIE_PATH") + "/*")
     for f in files:
         os.remove(f)
+    L = len(files)
     return f"I removed {L} garbage(s)"
 
 def bytie_handle_help() -> str:
