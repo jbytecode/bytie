@@ -208,7 +208,7 @@ def bytie_handle_XTRY(currency: str) -> str:
 
 @message_handler("lambada")
 def bytie_lambada_command(command: str) -> str:
-    "lambda {expression}: I want to be Clojure when I grow up"
+    "lambada {expression}: I want to be Clojure when I grow up"
     try:
         result = lambada.interprete(command)
         return result
