@@ -1,3 +1,4 @@
+from dotenv import load_dotenv
 import ast
 import requests
 import hashlib
@@ -9,14 +10,15 @@ from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
 
-
 try:
     import mandelbrot
+    import lambada
 except Exception:
     from . import mandelbrot
+    from . import lambada
 
+lambada = lambada.Interpreter()
 
-from dotenv import load_dotenv
 
 load_dotenv()
 
@@ -202,6 +204,16 @@ def bytie_handle_XTRY(currency: str) -> str:
         return f"{currency}TRY: {XTRY:.2f}"
     else:
         return "Please enter a valid currency abbrevation"
+
+
+@message_handler("lambada")
+def bytie_lambada_command(command: str) -> str:
+    "lambda {expression}: I want to be Clojure when I grow up"
+    try:
+        result = lambada.interprete(command)
+        return result
+    except BaseException as inst:
+        return str(inst)
 
 
 @message_handler("!xkcd")
