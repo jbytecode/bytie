@@ -14,6 +14,7 @@ TOKEN_PRODUCT = 9
 TOKEN_DIVIDE = 10
 TOKEN_IDENTIFIER = 11
 TOKEN_POW = 12
+TOKEN_EQUAL = 13
 
 # Class Token
 
@@ -78,6 +79,8 @@ class Lexer:
             return Token(TOKEN_DIVIDE, "/")
         elif cc == '^':
             return Token(TOKEN_POW, "^")
+        elif cc == '=':
+            return Token(TOKEN_EQUAL, "=")
         elif cc.isnumeric():
             content = cc
             while True:
@@ -139,6 +142,8 @@ class BinaryOperatorExpression(Expression):
             return self.left.eval(env) / self.right.eval(env)
         elif self.op == "^":
             return self.left.eval(env) ** self.right.eval(env)
+        elif self.op == "=":
+            return self.left.eval(env) == self.right.eval(env)
         else:
             return ErrorExpression(f"Operator not defined yet: {self.op}")
 
@@ -214,6 +219,20 @@ class FunctionCallExpression(Expression):
         result = func.body.eval(fdict)
         return result
 
+
+class IfElseExpression(Expression):
+    def __init__(self, cond: Expression, ifTrue: Expression, ifFalse: Expression):
+        self.cond = cond
+        self.ifTrue = ifTrue
+        self.ifFalse = ifFalse
+
+    def eval(self, env: Dict):
+        cond = self.cond.eval(env)
+        if cond:
+            return self.ifTrue.eval(env)
+        else:
+            return self.ifFalse.eval(env)
+
 # --------------------------------------------------------------------
 
 
@@ -272,12 +291,23 @@ class Parser():
             right = self.parseNextExpression()
             self.eatRightParanth()
             return BinaryOperatorExpression("^", left, right)
+        elif token.type == TOKEN_EQUAL:
+            left = self.parseNextExpression()
+            right = self.parseNextExpression()
+            self.eatRightParanth()
+            return BinaryOperatorExpression("=", left, right)
         elif token.type == TOKEN_IDENTIFIER:
             if token.content == "def":
                 left = self.parseNextExpression()
                 right = self.parseNextExpression()
                 self.eatRightParanth()
                 return DefExpression(left, right)
+            elif token.content == "ifelse":
+                cond = self.parseNextExpression()
+                ifTrue = self.parseNextExpression()
+                ifFalse = self.parseNextExpression()
+                self.eatRightParanth()
+                return IfElseExpression(cond, ifTrue, ifFalse)
             elif token.content == "list":
                 listcontent = []
                 while True:
@@ -338,12 +368,16 @@ class Interpreter:
 
 
 # REPL
-#interpreter = Interpreter()
-# code = """
-# (def f (fn (list x) (* x 2)))
-# (funcall f (list 5))
-# """
-# print(interpreter.interprete(code))
+interpreter = Interpreter()
+code = """
+(def f 
+    (fn (list x)
+        (ifelse (= x 1) 1 
+            (* x (funcall f (- x 1)))))) 
+
+(funcall f (list 5))
+"""
+print(interpreter.interprete(code))
 # while True:
 #    inp = input("lambada> ")
 #    print(interpreter.interprete(inp))
