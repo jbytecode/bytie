@@ -189,6 +189,31 @@ class LengthExpression(Expression):
 class DumpExpression(Expression):
     def eval(self, env: Dict):
         return str(env)
+
+
+class FunctionExpression(Expression):
+    def __init__(self, paramlist: ListExpression, body: Expression):
+        self.paramlist = paramlist
+        self.body = body
+
+    def eval(self, env: Dict):
+        return self
+
+
+class FunctionCallExpression(Expression):
+    def __init__(self, fname: IdentifierExpression, args: ListExpression):
+        self.fname = fname
+        self.args = args
+
+    def eval(self, env: Dict):
+        fdict = dict()
+        func: FunctionExpression = env[self.fname.id]
+        for i in range(0, len(func.paramlist.listcontent)):
+            fdict[func.paramlist.listcontent[i].id] = self.args.listcontent[i].eval(
+                fdict)
+        result = func.body.eval(fdict)
+        return result
+
 # --------------------------------------------------------------------
 
 
@@ -268,6 +293,16 @@ class Parser():
             elif token.content == "dump":
                 self.eatRightParanth()
                 return DumpExpression()
+            elif token.content == "fn":
+                paramlist = self.parseNextExpression()
+                body = self.parseNextExpression()
+                self.eatRightParanth()
+                return FunctionExpression(paramlist, body)
+            elif token.content == "funcall":
+                fname = self.parseNextExpression()
+                arglist = self.parseNextExpression()
+                self.eatRightParanth()
+                return FunctionCallExpression(fname, arglist)
             else:
                 return IdentifierExpression(token.content)
         elif token.type == TOKEN_EOF:
@@ -304,6 +339,11 @@ class Interpreter:
 
 # REPL
 #interpreter = Interpreter()
+# code = """
+# (def f (fn (list x) (* x 2)))
+# (funcall f (list 5))
+# """
+# print(interpreter.interprete(code))
 # while True:
 #    inp = input("lambada> ")
 #    print(interpreter.interprete(inp))
