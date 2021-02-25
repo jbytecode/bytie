@@ -211,7 +211,7 @@ class FunctionCallExpression(Expression):
         self.args = args
 
     def eval(self, env: Dict):
-        fdict = dict()
+        fdict = dict(env)
         func: FunctionExpression = env[self.fname.id]
         for i in range(0, len(func.paramlist.listcontent)):
             fdict[func.paramlist.listcontent[i].id] = self.args.listcontent[i].eval(
@@ -373,7 +373,7 @@ code = """
 (def f 
     (fn (list x)
         (ifelse (= x 1) 1 
-            (* x (funcall f (- x 1)))))) 
+            (* x (funcall f (list (- x 1))))))) 
 
 (funcall f (list 5))
 """
