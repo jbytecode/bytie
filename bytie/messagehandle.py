@@ -244,6 +244,23 @@ def bytie_handle_randomxkcd():
         return f"xkcd down :/"
 
 
+@message_handler('bytie play song!', prefix=False)
+def bytie_handle_play_song(message: str) -> str:
+    "bytie play song!: I always forget the lyrics."
+    words = ["real", "life", "just", "fantasy", "land", "escape", "open", "your", "eyes",
+             "look", "sky", "see", "sea", "easy", "come", "go", "little", "high", "low", "way", "wind",
+             "blow", "matter", "me", "man", "woman", "die", "born", "late", "tomorrow", "yesterday",
+             "night", "morning", "sun", "moon", "hate", "like", "love", "scream", "crazy", "island",
+             "ocean", "space", "distance", "hard", "easy", "darling", "break", "fast", "slow", "angry",
+             "over", "house", "home", "cloud", "movement", "absent", "passion", "dance", "burn", "fruit",
+             "time", "friend", "enemy", "war", "soldier", "army", "lost", "down", "beautiful", "tango",
+             "girl", "start", "finish", "walk", "taste", "blue", "satin", "white", "red", "pink", "can", "cant",
+             "free", "sweet", "need", "song", "heart", "soul"]
+    wcnt = random.sample([3, 4], 1)
+    songname = " ".join(random.sample(words, wcnt))
+    return f"-play {songname}"
+
+
 @message_handler('bytie clean temp!', prefix=False)
 def bytie_handle_clean_temp(message: str) -> str:
     "bytie clean temp!: Trig my garbage collector!"
