@@ -81,6 +81,14 @@ class Lexer:
             return Token(TOKEN_POW, "^")
         elif cc == '=':
             return Token(TOKEN_EQUAL, "=")
+        elif cc == '"':
+            content = cc
+            while True:
+                cc = self.eat()
+                if cc == '"':
+                    break
+                content = content + cc
+            return Token(TOKEN_CONSTANT_STRING, str(content))
         elif cc.isnumeric():
             content = cc
             while True:
@@ -118,6 +126,14 @@ class Expression():
 
 
 class NumberExpression(Expression):
+    def __init__(self, val):
+        self.val = val
+
+    def eval(self, environment: Dict):
+        return self.val
+
+
+class StringExpression(Expression):
     def __init__(self, val):
         self.val = val
 
@@ -266,6 +282,8 @@ class Parser():
             return None
         elif token.type == TOKEN_CONSTANT_NUMBER:
             return NumberExpression(token.content)
+        elif token.type == TOKEN_CONSTANT_STRING:
+            return StringExpression(token.content)
         elif token.type == TOKEN_PLUS:
             left = self.parseNextExpression()
             right = self.parseNextExpression()
@@ -370,12 +388,8 @@ class Interpreter:
 # REPL
 interpreter = Interpreter()
 code = """
-(def f 
-    (fn (list x)
-        (ifelse (= x 1) 1 
-            (* x (funcall f (list (- x 1))))))) 
-
-(funcall f (list 5))
+(def str "selam")
+(dump)
 """
 print(interpreter.interprete(code))
 # while True:
