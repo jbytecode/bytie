@@ -256,7 +256,7 @@ def bytie_handle_play_song(message: str) -> str:
              "time", "friend", "enemy", "war", "soldier", "army", "lost", "down", "beautiful", "tango",
              "girl", "start", "finish", "walk", "taste", "blue", "satin", "white", "red", "pink", "can", "cant",
              "free", "sweet", "need", "song", "heart", "soul"]
-    wcnt = random.sample([3, 4], 1)
+    wcnt = random.sample([3, 4], 1)[0]
     songname = " ".join(random.sample(words, wcnt))
     return f"-play {songname}"
 
