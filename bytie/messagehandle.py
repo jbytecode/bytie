@@ -255,6 +255,7 @@ def bytie_update_and_restart(message: str) -> str:
         subprocess.run(["/bin/bash", "run.sh"])
 
     atexit.register(bytieatexit)
+    print("By by bytie!")
     exit(0)
     # Never runs.
     return "Restarting..."
