@@ -27,6 +27,22 @@ async def on_member_join(member):
 
 
 @client.event
+async def on_group_join(channel, user):
+    await channel.send(f"{user} is here! :man_detective:")
+
+
+@client.event
+async def on_group_remove(channel, user):
+    await channel.send(f"{user} is out! :man_detective:")
+
+
+@client.event
+async def on_typing(channel: discord.abc.Messageable, user, when):
+    if random.random() < 0.01:
+        await channel.send(f"{user} is typing something :rolling_eyes:")
+
+
+@client.event
 async def on_message(message):
     if message.author == client.user:
         return
