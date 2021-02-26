@@ -6,6 +6,8 @@ import random
 import re
 import os
 import glob
+import subprocess
+import atexit
 from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
@@ -242,6 +244,20 @@ def bytie_handle_randomxkcd():
         return (bytie_handle_xkcd(rnd))
     else:
         return f"xkcd down :/"
+
+
+@message_handler('bytie update and restart!', prefix=False)
+def bytie_update_and_restart(message: str) -> str:
+    "Run git pull and register atexit() to restart run.sh"
+    result = subprocess.run(["git", "pull"])
+
+    def bytieatexit():
+        subprocess.run(["run.sh"])
+
+    atexit.register(bytieatexit)
+    exit(0)
+    # Never runs.
+    return "Restarting..."
 
 
 @message_handler('bytie play song!', prefix=False)
