@@ -248,7 +248,7 @@ def bytie_handle_randomxkcd():
 
 @message_handler('bytie update and restart!', prefix=False)
 def bytie_update_and_restart(message: str) -> str:
-    "Run git pull and register atexit() to restart run.sh"
+    "bytie update and restart!: Run git pull and register atexit() to restart run.sh"
     result = subprocess.run(["git", "pull"])
 
     def bytieatexit():
