@@ -252,7 +252,7 @@ def bytie_update_and_restart(message: str) -> str:
     result = subprocess.run(["git", "pull"])
 
     def bytieatexit():
-        subprocess.run(["run.sh"])
+        subprocess.run(["/bin/bash", "run.sh"])
 
     atexit.register(bytieatexit)
     exit(0)
