@@ -306,20 +306,34 @@ def bytie_handle_python(message: str) -> str:
     return "python is bad, and you should feel bad."
 
 
+@message_handler("datetime")
+def bytie_handle_datetime(command: str) -> str:
+    "datetime region/location: I don't need an  watch."
+    capt = requests.get(
+        f"http://worldtimeapi.org/api/timezone/{command}")
+    result = ""
+    try:
+        jsondata = json.loads(capt.text)
+        result = jsondata["datetime"]
+    except:
+        result = "¯\_(ツ)_/¯ ney?"
+    return result
+
+
 @message_handler('bytie korona!', prefix=False)
 def bytie_handle_covid(command: str) -> str:
-  "bytie korona!: I show you daily vaka sayısı."
+    "bytie korona!: I show you daily vaka sayısı."
 
-  url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
-  content = requests.get(url).text
-  
-  try:
-    rgx = r"var geneldurumjson = (\[.*?\]);//]]"
-    match = re.search(rgx, content).group(1)
-    data = json.loads(match)
-    daily = data[0]
+    url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
+    content = requests.get(url).text
 
-    res = """**{tarih}**
+    try:
+        rgx = r"var geneldurumjson = (\[.*?\]);//]]"
+        match = re.search(rgx, content).group(1)
+        data = json.loads(match)
+        daily = data[0]
+
+        res = """**{tarih}**
     * **Vaka**:  {gunluk_vaka}
     * **Test**:  {gunluk_test}
     * **Hasta**: {gunluk_hasta}
@@ -327,12 +341,12 @@ def bytie_handle_covid(command: str) -> str:
     * **İyileşen**: {gunluk_iyilesen}
     """.format(**daily)
 
-    return res
-  
-  except Exception as e:
-    return "Format değişmiş haberin yok! " + str(e) + " :/"
-    
-    
+        return res
+
+    except Exception as e:
+        return "Format değişmiş haberin yok! " + str(e) + " :/"
+
+
 if __name__ == '__main__':
     @message_handler('test', prefix=True, probability=0)
     def test(message):
