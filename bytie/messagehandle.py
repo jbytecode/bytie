@@ -8,6 +8,7 @@ import os
 import glob
 import subprocess
 import atexit
+import json
 from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
@@ -305,6 +306,33 @@ def bytie_handle_python(message: str) -> str:
     return "python is bad, and you should feel bad."
 
 
+@message_handler('bytie korona!', prefix=False)
+def bytie_handle_covid(command: str) -> str:
+  "covid: I show you daily vaka sayısı."
+
+  url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
+  content = requests.get(url).text
+  
+  try:
+    rgx = r"var geneldurumjson = (\[.*?\]);//]]"
+    match = re.search(rgx, content).group(1)
+    data = json.loads(match)
+    daily = data[0]
+
+    res = """**{tarih}**
+    * **Vaka**:  {gunluk_vaka}
+    * **Test**:  {gunluk_test}
+    * **Hasta**: {gunluk_hasta}
+    * **Vefat**: {gunluk_vefat}
+    * **İyileşen**: {gunluk_iyilesen}
+    """.format(**daily)
+
+    return res
+  
+  except Exception as e:
+    return "Format değişmiş haberin yok! " + str(e) + " :/"
+    
+    
 if __name__ == '__main__':
     @message_handler('test', prefix=True, probability=0)
     def test(message):
