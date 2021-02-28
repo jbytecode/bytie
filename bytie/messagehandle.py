@@ -308,7 +308,7 @@ def bytie_handle_python(message: str) -> str:
 
 @message_handler('bytie korona!', prefix=False)
 def bytie_handle_covid(command: str) -> str:
-  "covid: I show you daily vaka sayısı."
+  "bytie korona!: I show you daily vaka sayısı."
 
   url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
   content = requests.get(url).text
