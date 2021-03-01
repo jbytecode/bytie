@@ -311,8 +311,13 @@ def bytie_handle_python(message: str) -> str:
 def bytie_handle_stock(command: str) -> str:
     "stock {STOCKCODE}: This was implemented for max_zorin(PhD)"
     stockinfo = yfinance.Ticker(command)
-    result = str(stockinfo.history(period=""))
-    return result
+    data = stockinfo.history(period="")
+
+    if len(data) == 0:
+        return "No data found: " + str(command)
+    else:
+        result = data.T.to_string(float_format='{:,.4f}'.format)
+        return result
 
 
 @message_handler("datetime")
