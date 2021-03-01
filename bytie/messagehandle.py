@@ -316,7 +316,8 @@ def bytie_handle_stock(command: str) -> str:
     if len(data) == 0:
         return "No data found: " + str(command)
     else:
-        result = data.T.to_string(float_format='{:,.4f}'.format)
+        formatted = data.T.to_string(float_format='{:,.4f}'.format)
+        result = "```\n" + command + "\n\n" + formatted + "\n```"
         return result
 
 
