@@ -9,6 +9,7 @@ import glob
 import subprocess
 import atexit
 import json
+import yfinance
 from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
@@ -304,6 +305,14 @@ def bytie_handle_help(message: str) -> str:
 def bytie_handle_python(message: str) -> str:
     "python: I tell you the objective truth about python."
     return "python is bad, and you should feel bad."
+
+
+@message_handler("stock")
+def bytie_handle_stock(command: str) -> str:
+    "stock {STOCKCODE}: This was implemented for max_zorin(PhD)"
+    stockinfo = yfinance.Ticker(command)
+    result = str(stockinfo.history(period=""))
+    return result
 
 
 @message_handler("datetime")
