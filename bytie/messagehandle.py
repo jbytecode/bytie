@@ -311,8 +311,14 @@ def bytie_handle_python(message: str) -> str:
 def bytie_handle_stock(command: str) -> str:
     "stock {STOCKCODE}: This was implemented for max_zorin(PhD)"
     stockinfo = yfinance.Ticker(command)
-    result = str(stockinfo.history(period=""))
-    return result
+    data = stockinfo.history(period="")
+
+    if len(data) == 0:
+        return "No data found: " + str(command)
+    else:
+        formatted = data.T.to_string(float_format='{:,.4f}'.format)
+        result = "```\n" + command + "\n\n" + formatted + "\n```"
+        return result
 
 
 @message_handler("datetime")
@@ -331,6 +337,7 @@ def bytie_handle_datetime(command: str) -> str:
 
 @message_handler('bytie korona!', prefix=False)
 def bytie_handle_covid(command: str) -> str:
+
     "bytie korona!: I show you daily vaka sayısı."
 
     url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
