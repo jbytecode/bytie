@@ -307,6 +307,7 @@ def bytie_handle_python(message: str) -> str:
     return "python is bad, and you should feel bad."
 
 
+@message_handler("stonks")
 @message_handler("stock")
 def bytie_handle_stock(command: str) -> str:
     "stock {STOCKCODE}: This was implemented for max_zorin(PhD)"
