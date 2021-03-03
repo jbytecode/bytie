@@ -13,6 +13,7 @@ import yfinance
 from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
+import matplotlib.pyplot as plt
 
 try:
     import mandelbrot
@@ -308,9 +309,28 @@ def bytie_handle_python(message: str) -> str:
 
 
 @message_handler("stonks")
+def bytie_handle_stonks(command: str) -> str:
+    "stonks {STOCKCODE} {Days}: as historical as Fortran. See: stock"
+    pars = command.split(" ")
+    stockname = pars[0]
+    ndays = int(pars[1])
+    stockinfo = yfinance.Ticker(stockname)
+    data = stockinfo.history(period="max")
+    closes = list(data["Close"])
+    if len(data) == 0:
+        return "No data found: " + str(command)
+    else:
+        filename = f"image_{stockname}.png"
+        filepath = f"{PATH}/{filename}"
+        url = f"{HOST}/{filename}"
+        plt.plot(closes[-ndays:])
+        plt.savefig(filepath)
+        return url
+
+
 @message_handler("stock")
 def bytie_handle_stock(command: str) -> str:
-    "stock {STOCKCODE}: This was implemented for max_zorin(PhD)"
+    "stock {STOCKCODE}: Örnek vereyim, stock GOOG"
     stockinfo = yfinance.Ticker(command)
     data = stockinfo.history(period="")
 
@@ -338,7 +358,6 @@ def bytie_handle_datetime(command: str) -> str:
 
 @message_handler('bytie korona!', prefix=False)
 def bytie_handle_covid(command: str) -> str:
-
     "bytie korona!: I show you daily vaka sayısı."
 
     url = 'https://covid19.saglik.gov.tr/TR-66935/genel-koronavirus-tablosu.html'
