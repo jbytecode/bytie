@@ -310,21 +310,23 @@ def bytie_handle_python(message: str) -> str:
 
 @message_handler("stonks")
 def bytie_handle_stonks(command: str) -> str:
-    "stonks {STOCKCODE} {Days}: as historical as Fortran. See: stock"
-    pars = command.split(" ")
-    stockname = pars[0]
-    ndays = int(pars[1])
+    "stonks {STOCKCODE}: as historical as Fortran. See: stock"
+    stockname = command
     stockinfo = yfinance.Ticker(stockname)
-    data = stockinfo.history(period="max")
+    data = stockinfo.history(period="1mo")
     closes = list(data["Close"])
+    n = len(closes)
     if len(data) == 0:
         return "No data found: " + str(command)
     else:
         filename = f"image_{stockname}.png"
         filepath = f"{PATH}/{filename}"
         url = f"{HOST}/{filename}"
-        plt.plot(closes[-ndays:])
+        t = range(n)
+        plt.plot(t, closes)
+        plt.title(f"Last {n} days of {stockname}")
         plt.savefig(filepath)
+        plt.close()
         return url
 
 
