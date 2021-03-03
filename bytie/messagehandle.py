@@ -139,7 +139,7 @@ def bytie_handle_saysomethingnew(message: str) -> str:
         return "failatun failun failure :("
 
 
-@message_handler("iplikisyin", probability=0.05)
+@message_handler("iplikisyin", probability=0.025)
 def bytie_handle_iplikisyin(message: str) -> str:
     "iplikisyin ${message} : I show you exactly what you sound like."
     vowels = r"[aeıioöuü]"
