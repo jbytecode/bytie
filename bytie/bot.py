@@ -38,7 +38,7 @@ async def on_group_remove(channel, user):
 
 @client.event
 async def on_typing(channel: discord.abc.Messageable, user, when):
-    if random.random() < 0.025:
+    if random.random() < 0.01:
         await channel.send(f"{user} is typing something :rolling_eyes:")
 
 
