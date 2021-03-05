@@ -18,12 +18,22 @@ import matplotlib.pyplot as plt
 try:
     import mandelbrot
     import lambada
+    import libstdlambada
 except Exception:
     from . import mandelbrot
     from . import lambada
+    from . import libstdlambada
 
-lambada = lambada.Interpreter()
-
+# initialize interpreter
+lambadainterpreter = lambada.Interpreter()
+lambadainterpreter.addvar(
+    "sum", lambada.PythonFunctionExpression(libstdlambada.sum))
+lambadainterpreter.addvar(
+    "mean", lambada.PythonFunctionExpression(libstdlambada.mean))
+lambadainterpreter.addvar(
+    "median", lambada.PythonFunctionExpression(libstdlambada.median))
+lambadainterpreter.addvar(
+    "plot", lambada.PythonFunctionExpression(libstdlambada.plot))
 
 load_dotenv()
 
@@ -215,7 +225,7 @@ def bytie_handle_XTRY(currency: str) -> str:
 def bytie_lambada_command(command: str) -> str:
     "lambada {expression}: I want to be Clojure when I grow up"
     try:
-        result = lambada.interprete(command)
+        result = lambadainterpreter.interprete(command)
         return result
     except BaseException as inst:
         return str(inst)

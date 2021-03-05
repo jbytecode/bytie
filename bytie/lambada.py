@@ -1,6 +1,6 @@
 # Constants
 from typing import Dict
-
+import libstdlambada
 
 TOKEN_LEFT_PARANT = 0
 TOKEN_RIGHT_PARANT = 1
@@ -221,6 +221,27 @@ class FunctionExpression(Expression):
         return self
 
 
+class PythonFunctionExpression(Expression):
+    def __init__(self, pyfunction):
+        self.pyfunction = pyfunction
+
+    def eval(self, env: Dict):
+        return "PASS to PythonFunctionCallExpression"
+
+
+class PythonFunctionCallExpression(Expression):
+    def __init__(self, fname: IdentifierExpression, args: ListExpression):
+        self.fname = fname
+        self.args = args
+
+    def eval(self, env: Dict):
+        fdict = dict(env)
+        func: PythonFunctionExpression = env[self.fname.id]
+        arguments = self.args.eval(env)
+        result = func.pyfunction(arguments)
+        return result
+
+
 class FunctionCallExpression(Expression):
     def __init__(self, fname: IdentifierExpression, args: ListExpression):
         self.fname = fname
@@ -351,6 +372,11 @@ class Parser():
                 arglist = self.parseNextExpression()
                 self.eatRightParanth()
                 return FunctionCallExpression(fname, arglist)
+            elif token.content == "py":
+                fname = self.parseNextExpression()
+                arglist = self.parseNextExpression()
+                self.eatRightParanth()
+                return PythonFunctionCallExpression(fname, arglist)
             else:
                 return IdentifierExpression(token.content)
         elif token.type == TOKEN_EOF:
@@ -368,6 +394,9 @@ class Parser():
 class Interpreter:
     def __init__(self):
         self.env = dict()
+
+    def addvar(self, name, val):
+        self.env[name] = val
 
     def interprete(self, code: str):
         parser = Parser(code)
@@ -391,6 +420,7 @@ code = """
 (def str "selam")
 (dump)
 """
+interpreter.addvar("hako", PythonFunctionExpression("hako"))
 print(interpreter.interprete(code))
 # while True:
 #    inp = input("lambada> ")
