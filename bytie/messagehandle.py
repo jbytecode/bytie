@@ -24,6 +24,12 @@ except Exception:
     from . import lambada
     from . import libstdlambada
 
+
+load_dotenv()
+
+HOST = os.getenv("BYTIE_HOST") or 'http://localhost/'
+PATH = os.getenv("BYTIE_PATH") or './.tmp'
+
 # initialize interpreter
 lambadainterpreter = lambada.Interpreter()
 lambadainterpreter.addvar(
@@ -35,10 +41,6 @@ lambadainterpreter.addvar(
 lambadainterpreter.addvar(
     "plot", lambada.PythonFunctionExpression(libstdlambada.plot))
 
-load_dotenv()
-
-HOST = os.getenv("BYTIE_HOST") or 'http://localhost/'
-PATH = os.getenv("BYTIE_PATH") or './.tmp'
 
 message_handlers = []
 
