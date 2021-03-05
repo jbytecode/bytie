@@ -40,7 +40,10 @@ lambadainterpreter.addvar(
     "median", lambada.PythonFunctionExpression(libstdlambada.median))
 lambadainterpreter.addvar(
     "plot", lambada.PythonFunctionExpression(libstdlambada.plot))
-
+lambadainterpreter.addvar(
+    "quantile", lambada.PythonFunctionExpression(libstdlambada.quantile))
+lambadainterpreter.addvar(
+    "random", lambada.PythonFunctionExpression(libstdlambada.draw_random_numbers))
 
 message_handlers = []
 
