@@ -2,9 +2,15 @@ from typing import List
 
 import numpy
 import random
+import os
 import matplotlib.pyplot as plt
+from dotenv import load_dotenv
 
-from messagehandle import HOST, PATH
+
+load_dotenv()
+
+HOST = os.getenv("BYTIE_HOST") or 'http://localhost/'
+PATH = os.getenv("BYTIE_PATH") or './.tmp'
 
 sum = numpy.sum
 mean = numpy.mean
