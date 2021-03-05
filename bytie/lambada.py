@@ -237,8 +237,8 @@ class PythonFunctionCallExpression(Expression):
     def eval(self, env: Dict):
         fdict = dict(env)
         func: PythonFunctionExpression = env[self.fname.id]
-        arguments = self.args.eval(env)
-        result = func.pyfunction(arguments)
+        evaledList = self.args.eval(env)
+        result = func.pyfunction(evaledList)
         return result
 
 
