@@ -4,6 +4,8 @@ import numpy
 import random
 import matplotlib.pyplot as plt
 
+from messagehandle import HOST, PATH
+
 sum = numpy.sum
 mean = numpy.mean
 median = numpy.median
