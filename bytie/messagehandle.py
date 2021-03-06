@@ -320,7 +320,7 @@ def bytie_handle_help(message: str) -> str:
 @message_handler('python', prefix=False)
 def bytie_handle_python(message: str) -> str:
     "python: I tell you the objective truth about python."
-    return "python is bad, and you should feel bad."
+    return "python is great, and you should feel proud of it."
 
 
 @message_handler("stonks")
