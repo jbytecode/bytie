@@ -279,21 +279,75 @@ def bytie_update_and_restart(message: str) -> str:
     return "Restarting..."
 
 
+@message_handler('bytie tell me a story!', prefix=False)
+def bytie_handle_tell_story(message: str) -> str:
+    "bytie tell me a story!: biyti til mi i sitiri :rofl:"
+    urls = [
+        "http://4.bp.blogspot.com/-txmMmc24--I/VZ663QSkjoI/AAAAAAAAAto/uNg3peYTV-k/s1600/10.jpg",
+        "https://listelist.com/wp-content/uploads/2015/02/twitter-fenomeni-mememetali-620x375.jpg",
+        "https://img-s2.onedio.com/id-55047c15ff285b051a6db88f/rev-0/w-635/listing/f-jpg-webp/s-da729d8e8726fa8611d4cd227133dcd57cdc797f.webp",
+        "https://img-s1.onedio.com/id-55047c2add6e2f5b444334ba/rev-0/w-635/listing/f-jpg-webp/s-90ba45a4f5c476c0f30ae051f49ac5b7d775caaf.webp",
+        "https://lh3.googleusercontent.com/proxy/i3y1JJen_Yoqup2G7aHTrleVk04KVvoL4H6P5BZRqYFdwmsTdAuzBpDbTXqipXYWcA57uJvF5s93WDaLZfpUbBcGsl75Ao-VarLheXlxHuJN",
+        "https://www.pekguzelsozler.com/wp-content/uploads/2018/06/Mehmet-Ali-S%C3%B6zleri.jpg",
+        "https://lh3.googleusercontent.com/proxy/k9Xq6CGQouGDh-hfcrm74O24INK3DsvV8WjiWAl2U9TSSBKC-p32zDn7UjWdWEcDFhgBbD9qpaIIMsjgCKzXbCNmPAQUiUmSBI4Y148aQyB2",
+        "https://galeri14.uludagsozluk.com/766/mehmet-ali-hikayeleri_1966871.jpg",
+        "https://lh3.googleusercontent.com/proxy/YPEWqXacnbOVRMDDAGoVvad73OznLON8-1UPKlVNG_xPhmqlzs1yYR8WFZOnRhoUHrzmG5Xj6lUA3WVFEnRGmVjzaeyy4B7OriCF9iSIjkyT",
+        "https://galeri14.uludagsozluk.com/771/mehmet-ali-hikayeleri_1966872.png",
+        "https://lh3.googleusercontent.com/proxy/gnEBxKRuPrTokcLmbI-n0NG5is4Sm2--SvCdt3CwmL2Dem6cgm6-9F2cOY_L0kzOg_-2w0YYbJKT--xUXYmteAiGiUlY2yhtC43Pzidby3U",
+        "https://lh3.googleusercontent.com/proxy/du3Tnk4NlxAGxSGwN9YtB_ZSfbbr-puyMBSRFxzIjLgW9ZDjk2zfKulKXIItzIjtjwM8vUw2OdiesdLkc8Nt0QxmVWWMOnWIeQEZ6fLT5KM",
+        "https://lh3.googleusercontent.com/proxy/gLjCNM1B3KILiXMOROa4GLkw3-DSIZBRVEWQrFcTfQSigmo5CntZ1vKTZ3Hzh8EDwy9mH5wv0biQNt8HXah4lEW8kmbU4marmzVQ92DUFjs",
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRELhz2h8-e6O9YPfCB83UY7WJECHhxL4cy_w&usqp=CAU",
+        "https://www.istanbulhaber.com.tr/d/gallery/1968_1.jpg",
+        "https://lh3.googleusercontent.com/proxy/TOcrqDhr13oJ_qYjyf4bBhCEd5D-ib-WQCoGL3weG6E4GFkNMYPVRiFOILrPaOQtogH7U8-ReZcgj5nYUqreKofj4poFUCl3Z-DkuPBec1bWjtGEHW12FSZN9rbUh1aFvbP4hQq6PqzN3EoNDaH4phTf4ySbbsuzsUaGl1AXG8HFwGo",
+        "https://64.media.tumblr.com/bb812bdec87f92afb2d3128e62ffe61c/tumblr_o1mp4uUwKK1ujmvy2o1_500.jpg",
+        "http://img7.mynet.com/galeri/2015/02/09/024123679/8506980-501x226.jpg",
+        "https://galeri8.uludagsozluk.com/416/mememetali_752598.jpg",
+        "https://www.youtube.com/watch?v=QGkIeNlJaPU",
+        "https://www.youtube.com/watch?v=aNossrX5PqQ",
+        "https://img-s1.onedio.com/id-55047c2add6e2f5b444334ba/rev-0/w-635/listing/f-jpg-webp/s-90ba45a4f5c476c0f30ae051f49ac5b7d775caaf.webp",
+        "https://img-s2.onedio.com/id-55047c621a21b1541537eb59/rev-0/w-635/listing/f-jpg-webp/s-836d804ea708a8802009f8290fc066febd35c20b.webp",
+        "https://img-s2.onedio.com/id-55047c6d1a21b1541537eb5d/rev-0/w-635/listing/f-jpg-webp/s-28bb362a18017115392de02bf1ad9c02dc9a0708.webp",
+        "https://img-s1.onedio.com/id-55047cb1e2cec1b01338bb60/rev-0/w-635/listing/f-jpg-webp/s-1dd66044823b4066a29a2cbe4ff19023562c20d2.webp",
+        "https://iasbh.tmgrup.com.tr/21ecd2/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/4.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/6ec9de/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/5.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/535a3e/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/6.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/ef07d8/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/7.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/972982/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/8.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/abaefa/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/9.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/966b3d/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/10.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/2b9696/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/11.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/aa58a6/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/14.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/0bbf5f/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/15.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/7ceb3e/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/17.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/3d217d/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/18.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/52ad4e/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/19.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/d20ce3/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/21.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/5655ee/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/22.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/bf61a4/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/23.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/f90cd8/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/24.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/7de959/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/25.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/908471/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/26.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/d8bdaa/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/27.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/aaca39/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/28.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/a81ff2/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/29.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/69850f/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/30.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/580fa6/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/31.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/64f064/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/32.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/1fd0dc/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/34.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/249887/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/35.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/640be6/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/38.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/1c6408/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/40.jpg&mw=752&mh=700",
+        "https://iasbh.tmgrup.com.tr/86e4f0/0/0/0/0/0/0?u=http://i.teknokulis.com/galeri/internet/twiterin-son-fenomeni-ile-tanisin-mehmet-ali/41.jpg&mw=752&mh=700",
+        "Çocuk kızı kaçırmış kız ilk baş ondan nefret etmiş sonra çocuk odun kırıyormuş kız camdan onu görmüş demiş ne güçlü bi erkek aşık olmuş..",
+        "Çocukla kız tepeye çıkmışlar kız çocuğu uçurumdan aşağı itmiş çocuk demiş naaptın kız demiş ittim seni çocuk demiş ama neden kız demiş çünkü herkes öldürür sevdiğini..."
+    ]
+    return random.sample(urls, 1)[0]
+
+
 @message_handler('bytie play song!', prefix=False)
 def bytie_handle_play_song(message: str) -> str:
     "bytie play song!: I always forget the lyrics."
-    words = ["real", "life", "just", "fantasy", "land", "escape", "open", "your", "eyes",
-             "look", "sky", "see", "sea", "easy", "come", "go", "little", "high", "low", "way", "wind",
-             "blow", "matter", "me", "man", "woman", "die", "born", "late", "tomorrow", "yesterday",
-             "night", "morning", "sun", "moon", "hate", "like", "love", "scream", "crazy", "island",
-             "ocean", "space", "distance", "hard", "easy", "darling", "break", "fast", "slow", "angry",
-             "over", "house", "home", "cloud", "movement", "absent", "passion", "dance", "burn", "fruit",
-             "time", "friend", "enemy", "war", "soldier", "army", "lost", "down", "beautiful", "tango",
-             "girl", "start", "finish", "walk", "taste", "blue", "satin", "white", "red", "pink", "can", "cant",
-             "free", "sweet", "need", "song", "heart", "soul"]
-    wcnt = random.sample([3, 4], 1)[0]
-    songname = " ".join(random.sample(words, wcnt))
-    return f"-play {songname}"
+    return "This command is deprecated and will be removed in future releases. I don't think of being a robot in my next life."
 
 
 @message_handler('bytie clean temp!', prefix=False)
