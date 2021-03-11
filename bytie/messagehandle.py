@@ -92,7 +92,7 @@ def bytie_handle_hey_bytie(command: str) -> str:
 def bytie_handle_ast(command: str) -> str:
     "ast ${python code} I generate abstract syntax trees"
     parsed = ast.parse(command)
-    tree = ast.dump(parsed)
+    tree = ast.dump(parsed, indent = 4)
     return tree
 
 
