@@ -14,6 +14,7 @@ from os import path
 from numpy import fromstring, array2string
 from numpy.fft import fft
 import matplotlib.pyplot as plt
+from bs4 import BeautifulSoup
 
 try:
     import mandelbrot
@@ -452,6 +453,26 @@ def bytie_handle_covid(command: str) -> str:
 
     except Exception as e:
         return "Format değişmiş haberin yok! " + str(e) + " :/"
+
+
+@message_handler('bytie weather')
+def bytie_weather(command: str) -> str:
+    "bytie weather: I show you weather condition anywhere in the world. bytie weather <city>"
+    command= command.capitalize()
+    if command[0] == "İ":
+        new = list(command)
+        new[0] = "I"
+        command = ''.join(new)
+    url = "https://www.google.com/search?q=" + "weather" + command
+    html = requests.get(url).content
+    soup = BeautifulSoup(html, 'html.parser')
+    temp = soup.find('div', attrs={'class': 'BNeawe iBp4i AP7Wnd'}).text
+    str1 = soup.find('div', attrs={'class': 'BNeawe tAd8D AP7Wnd'}).text
+    data = str1.split('\n')
+    sky = data[1]
+    result = f"{command} için hava durumuna bakıyorum.\n Hava sıcaklığı: {temp}\n Gökyüzü: {sky}"
+    return result
+
 
 
 if __name__ == '__main__':
