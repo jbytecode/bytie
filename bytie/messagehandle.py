@@ -174,10 +174,15 @@ def tdk(word: str) -> str:
         data = operUrl.read()
         jsonData = json.loads(data)
         if str(jsonData).find("error") != -1:
-            result = "git biraz türkçe çalış."
+            result = "güzel türkçe'mizde böyle bir sözcük yok."
         else:
+            t=1
             for i in jsonData[0]["anlamlarListe"]:
-                result = result + i["anlam"] + "\n"
+                if "ozelliklerListe" in i:
+                    sonuc = sonuc + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+                else:
+                    sonuc = sonuc + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+                t+=1
     else:
         print("tdk kendine gel: ", operUrl.getcode())
     return result
