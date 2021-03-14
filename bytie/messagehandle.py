@@ -540,12 +540,12 @@ def bytie_take(command: str) -> str:
 
 @message_handler('split')
 def bytie_split(command: str) -> str:
-    "split <str> <sep>: Splits str by sep"
+    "split <sep> <str>: Splits str by sep"
 
     parsed = command.split(" ")
-    str = parsed[0]
-    sep = parsed[1]
-    lines = str.split(sep)
+    sep = parsed[0]
+    mystr = parsed[1]
+    lines = mystr.split(sep)
 
     res = "\n".join(lines)
     return res
