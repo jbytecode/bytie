@@ -164,7 +164,7 @@ def bytie_handle_iplikisyin(message: str) -> str:
     result = re.sub(vowels, choice, message.lower()) + " :rofl:"
     return result
 
-@message_handler("tdk", prefix=false)
+@message_handler("tdk", prefix=False)
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
     operUrl = urllib.request.urlopen("https://sozluk.gov.tr/gts?ara=" + word)
