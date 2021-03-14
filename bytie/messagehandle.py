@@ -542,7 +542,7 @@ def bytie_take(command: str) -> str:
 def bytie_split(command: str) -> str:
     "split <sep> <str>: Splits str by sep"
 
-    parsed = command.split(" ")
+    parsed = command.split(" ", maxsplit=1)
     sep = parsed[0]
     mystr = parsed[1]
     lines = mystr.split(sep)
