@@ -9,6 +9,7 @@ import glob
 import subprocess
 import atexit
 import json
+import urllib.request
 import yfinance
 from os import path
 from numpy import fromstring, array2string
@@ -161,6 +162,23 @@ def bytie_handle_iplikisyin(message: str) -> str:
     vowels = r"[aeıioöuü]"
     choice = random.choice("io")
     result = re.sub(vowels, choice, message.lower()) + " :rofl:"
+    return result
+
+@message_handler("tdk", prefix=false)
+def tdk(word: str) -> str:
+    "tdk: turkish dictionary"
+    operUrl = urllib.request.urlopen("https://sozluk.gov.tr/gts?ara=" + word)
+    if(operUrl.getcode()==200):
+        result = ""
+        data = operUrl.read()
+        jsonData = json.loads(data)
+        if str(jsonData).find("error") != -1:
+            result = "git biraz türkçe çalış."
+        else:
+            for i in jsonData[0]["anlamlarListe"]:
+                result = result + i["anlam"] + "\n"
+    else:
+        print("tdk kendine gel: ", operUrl.getcode())
     return result
 
 
