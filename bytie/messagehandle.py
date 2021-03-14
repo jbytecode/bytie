@@ -64,7 +64,7 @@ def message_handler(name: str, prefix: bool = True, probability: float = 0.0):
                     return func(message)
                 except Exception as e:
                     return 'Beep boop! bytie is confused! ' + str(e)
-            return ''
+            return None
         if func.__doc__ == None:
             # dev warning message
             print(
@@ -493,6 +493,49 @@ def bytie_weather(command: str) -> str:
     return result
 
 
+@message_handler('|>')
+def bytie_pipe(command: str) -> str:
+    "|> cmd1 |> cmd2 ... : pipe outputs of your commands."
+    sequence = [i.strip() for i in command.split("|>")]
+    
+    if len(sequence) == 0:
+        return ""
+
+    cmd = sequence[0]
+    acc = handle_string(cmd)
+    if acc is None:
+        return "yalan yanlış komutlar: " + str(cmd)
+    for cmd in sequence[1:]:
+        
+        cmd_and_arg = cmd + " " + acc
+        acc = handle_string(cmd_and_arg)
+        if acc is None:
+            return "yalan yanlış komutlar: " + str(cmd)
+
+    return acc
+
+@message_handler('take')
+def bytie_take(command: str) -> str:
+    "take <n> <m> <input>: take lines in [n,m). (0-indexed)"
+    
+    command = command.split(maxsplit=2)
+    n = int(command[0])
+    m = int(command[1])
+    
+    lines = command[2].split("\n")
+    chosen = lines[n:m]
+    res = "\n".join(chosen)
+    return res
+
+
+
+
+def handle_string(text):
+    for handler in message_handlers:
+        res = handler['handler'](text)
+        if res is not None:
+            return res
+    return None
 
 if __name__ == '__main__':
     @message_handler('test', prefix=True, probability=0)
