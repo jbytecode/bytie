@@ -179,9 +179,9 @@ def tdk(word: str) -> str:
             t=1
             for i in jsonData[0]["anlamlarListe"]:
                 if "ozelliklerListe" in i:
-                    sonuc = sonuc + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+                    result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
                 else:
-                    sonuc = sonuc + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+                    result = result + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
                 t+=1
     else:
         print("tdk kendine gel: ", operUrl.getcode())
