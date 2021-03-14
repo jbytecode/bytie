@@ -167,7 +167,8 @@ def bytie_handle_iplikisyin(message: str) -> str:
 @message_handler("tdk")
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
-    operUrl = urllib.request.urlopen("https://sozluk.gov.tr/gts?ara=" + word)
+    query_string = urllib.parse.quote(word)
+    operUrl = urllib.request.urlopen("https://sozluk.gov.tr/gts?ara=" + query_string)
     if(operUrl.getcode()==200):
         result = ""
         data = operUrl.read()
