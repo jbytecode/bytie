@@ -18,6 +18,8 @@ Welcome, I am the bot of this channel. Try typing:
 
         - usd: Price of USD in Turkish Liras
 
+        - tdk {word}: turkish dictionary
+
         - bytie weather <city> : I show you weather condition anywhere in the world
 
         - mandelbrot ${x} ${y} ${zoom} : I generate a mandelbrot image for you. 
