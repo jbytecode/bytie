@@ -164,25 +164,29 @@ def bytie_handle_iplikisyin(message: str) -> str:
     result = re.sub(vowels, choice, message.lower()) + " :rofl:"
     return result
 
+
 @message_handler("tdk")
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
     query_string = urllib.parse.quote(word)
-    operUrl = urllib.request.urlopen("https://sozluk.gov.tr/gts?ara=" + query_string)
-    if(operUrl.getcode()==200):
+    operUrl = urllib.request.urlopen(
+        "https://sozluk.gov.tr/gts?ara=" + query_string)
+    if(operUrl.getcode() == 200):
         result = ""
         data = operUrl.read()
         jsonData = json.loads(data)
         if str(jsonData).find("error") != -1:
             result = "güzel türkçe'mizde böyle bir sözcük yok."
         else:
-            t=1
+            t = 1
             for i in jsonData[0]["anlamlarListe"]:
                 if "ozelliklerListe" in i:
-                    result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+                    result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(
+                        t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
                 else:
-                    result = result + str(t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
-                t+=1
+                    result = result + str(t) + ". " + \
+                        i["anlam"].replace("343", "bkz.") + "\n"
+                t += 1
     else:
         print("tdk kendine gel: ", operUrl.getcode())
     return result
@@ -482,7 +486,7 @@ def bytie_handle_covid(command: str) -> str:
 @message_handler('bytie weather')
 def bytie_weather(command: str) -> str:
     "bytie weather: I show you weather condition anywhere in the world. bytie weather <city>"
-    command= command.capitalize()
+    command = command.capitalize()
     if command[0] == "İ":
         new = list(command)
         new[0] = "I"
@@ -502,7 +506,7 @@ def bytie_weather(command: str) -> str:
 def bytie_pipe(command: str) -> str:
     "|> cmd1 |> cmd2 ... : pipe outputs of your commands."
     sequence = [i.strip() for i in command.split("|>")]
-    
+
     if len(sequence) == 0:
         return ""
 
@@ -511,7 +515,7 @@ def bytie_pipe(command: str) -> str:
     if acc is None:
         return "yalan yanlış komutlar: " + str(cmd)
     for cmd in sequence[1:]:
-        
+
         cmd_and_arg = cmd + " " + acc
         acc = handle_string(cmd_and_arg)
         if acc is None:
@@ -519,20 +523,32 @@ def bytie_pipe(command: str) -> str:
 
     return acc
 
+
 @message_handler('take')
 def bytie_take(command: str) -> str:
     "take <n> <m> <input>: take lines in [n,m). (0-indexed)"
-    
+
     command = command.split(maxsplit=2)
     n = int(command[0])
     m = int(command[1])
-    
+
     lines = command[2].split("\n")
     chosen = lines[n:m]
     res = "\n".join(chosen)
     return res
 
 
+@message_handler('split')
+def bytie_split(command: str) -> str:
+    "split <str> <sep>: Splits str by sep"
+
+    parsed = command.split(" ")
+    str = parsed[0]
+    sep = parsed[1]
+    lines = str.split(sep)
+
+    res = "\n".join(lines)
+    return res
 
 
 def handle_string(text):
@@ -541,6 +557,7 @@ def handle_string(text):
         if res is not None:
             return res
     return None
+
 
 if __name__ == '__main__':
     @message_handler('test', prefix=True, probability=0)
