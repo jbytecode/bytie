@@ -4,6 +4,7 @@ from messagehandle import message_handlers
 import os
 import ast
 import random
+import textwrap
 
 
 import discord
@@ -55,8 +56,15 @@ async def on_message(message):
 
     for handler in message_handlers:
         msg = handler['handler'](incoming)
-        if msg:
-            await message.channel.send(msg)
+        if not msg:
+            continue
 
+        for part in textwrap.wrap(
+            msg,
+            1300,
+            drop_whitespace=False,
+            replace_whitespace=False
+        ):
+            await message.channel.send(part)
 
 client.run(TOKEN)
