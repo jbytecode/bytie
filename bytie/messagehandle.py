@@ -164,6 +164,22 @@ def bytie_handle_iplikisyin(message: str) -> str:
     result = re.sub(vowels, choice, message.lower()) + " :rofl:"
     return result
 
+@message_handler("ss")
+def ss(gelenURL: str) -> str:
+    "ss: capture screenshots from any website."
+    user_agent = 'Mozilla/5.0 (Windows; U; Windows NT 5.1; en-US; rv:1.9.0.7) Gecko/2009021910 Firefox/3.0.7'
+    url = "https://screenshotapi.net/api/v1/screenshot?token=U431LMTYAYRB0EBBSC6IM7KPUDENA4XJ&url="+gelenURL+"&height=1080&fresh=true"
+    headers={'User-Agent':user_agent,}
+    request=urllib.request.Request(url,None,headers)
+    operUrl = urllib.request.urlopen(request)
+    if(operUrl.getcode()==200):
+        result = ""
+        data = operUrl.read()
+        jsonData = json.loads(data)
+        result = "**Üretilme zamanı:** " + jsonData["created_at"] + "\n**Paylaş:**\n" + jsonData["screenshot"]
+    else:
+        print("olmadı: ", operUrl.getcode())
+    return result 
 
 @message_handler("tdk")
 def tdk(word: str) -> str:
