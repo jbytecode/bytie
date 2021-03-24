@@ -164,6 +164,24 @@ def bytie_handle_iplikisyin(message: str) -> str:
     result = re.sub(vowels, choice, message.lower()) + " :rofl:"
     return result
 
+@message_handler("ebobekok")
+def ebobekok(raw_numbers: str) -> str:
+    "ebobekok: calculate the gcd and lcm for given set of numbers."
+    numbers = raw_numbers.replace(" ", "").split(",")
+    def calculator(a, b):
+      while(b > 0):
+          temp = b
+          b = a % b
+          a = temp
+      return a
+    resultofGCD = int(numbers[0])
+    resultofLCM = int(numbers[0])
+    for x in numbers:
+        resultofGCD = calculator(resultofGCD, int(x))
+        resultofLCM = resultofLCM * int((int(x) / calculator(resultofLCM, int(x))))
+    result = "**EBOB:** " + str(resultofGCD) + " & **EKOK:** " + str(resultofLCM)
+    return result
+
 @message_handler("ss")
 def ss(gelenURL: str) -> str:
     "ss: capture screenshots from any website."
