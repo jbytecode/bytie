@@ -202,28 +202,29 @@ def ss(gelenURL: str) -> str:
 @message_handler("tdk")
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
-    query_string = urllib.parse.quote(word)
-    operUrl = urllib.request.urlopen(
-        "https://sozluk.gov.tr/gts?ara=" + query_string)
-    if(operUrl.getcode() == 200):
-        result = ""
-        data = operUrl.read()
-        jsonData = json.loads(data)
-        if str(jsonData).find("error") != -1:
-            result = "güzel türkçe'mizde böyle bir sözcük yok."
-        else:
-            t = 1
-            for i in jsonData[0]["anlamlarListe"]:
-                if "ozelliklerListe" in i:
-                    result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(
-                        t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
-                else:
-                    result = result + str(t) + ". " + \
-                        i["anlam"].replace("343", "bkz.") + "\n"
-                t += 1
-    else:
-        print("tdk kendine gel: ", operUrl.getcode())
-    return result
+    return "tdk does not mean (Threads) are (Destroyed) by (K)ernel.
+    #query_string = urllib.parse.quote(word)
+    #operUrl = urllib.request.urlopen(
+    #    "https://sozluk.gov.tr/gts?ara=" + query_string)
+    #if(operUrl.getcode() == 200):
+    #    result = ""
+    #    data = operUrl.read()
+    #    jsonData = json.loads(data)
+    #    if str(jsonData).find("error") != -1:
+    #        result = "güzel türkçe'mizde böyle bir sözcük yok."
+    #    else:
+    #        t = 1
+    #        for i in jsonData[0]["anlamlarListe"]:
+    #            if "ozelliklerListe" in i:
+    #                result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(
+    #                    t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
+    #            else:
+    #                result = result + str(t) + ". " + \
+    #                    i["anlam"].replace("343", "bkz.") + "\n"
+    #            t += 1
+    #else:
+    #    print("tdk kendine gel: ", operUrl.getcode())
+    #return result
 
 
 @message_handler("usd", prefix=False)
