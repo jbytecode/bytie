@@ -202,7 +202,7 @@ def ss(gelenURL: str) -> str:
 @message_handler("tdk")
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
-    return "tdk does not mean (Threads) are (Destroyed) by (K)ernel.
+    return "tdk does not mean (Threads) are (Destroyed) by (K)ernel."
     #query_string = urllib.parse.quote(word)
     #operUrl = urllib.request.urlopen(
     #    "https://sozluk.gov.tr/gts?ara=" + query_string)
