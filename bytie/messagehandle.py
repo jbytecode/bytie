@@ -202,29 +202,29 @@ def ss(gelenURL: str) -> str:
 @message_handler("tdk")
 def tdk(word: str) -> str:
     "tdk: turkish dictionary"
-    return "tdk does not mean (Threads) are (Destroyed) by (K)ernel."
-    #query_string = urllib.parse.quote(word)
-    #operUrl = urllib.request.urlopen(
-    #    "https://sozluk.gov.tr/gts?ara=" + query_string)
-    #if(operUrl.getcode() == 200):
-    #    result = ""
-    #    data = operUrl.read()
-    #    jsonData = json.loads(data)
-    #    if str(jsonData).find("error") != -1:
-    #        result = "güzel türkçe'mizde böyle bir sözcük yok."
-    #    else:
-    #        t = 1
-    #        for i in jsonData[0]["anlamlarListe"]:
-    #            if "ozelliklerListe" in i:
-    #                result = result + "**" + i["ozelliklerListe"][0]["tam_adi"] + ":**\n" + str(
-    #                    t) + ". " + i["anlam"].replace("343", "bkz.") + "\n"
-    #            else:
-    #                result = result + str(t) + ". " + \
-    #                    i["anlam"].replace("343", "bkz.") + "\n"
-    #            t += 1
-    #else:
-    #    print("tdk kendine gel: ", operUrl.getcode())
-    #return result
+    word = word.strip()
+    url = "https://sozluk.gov.tr/gts?ara=" + word
+    page = requests.get(url).text
+    page_json = json.loads(page)
+    
+    if type(page_json) == type({}) and "error" in page_json:
+        return bytie_handle_iplikisyin(word + " milletin kendi kendini yönetmesidir")
+
+    else:
+        page_json = page_json[0]
+        if "anlamlarListe" in page_json:
+            meanings = []
+            for idx, elem in enumerate(page_json["anlamlarListe"]):
+                try:
+                    tam_adi = elem["ozelliklerListe"][0]["tam_adi"]
+                except:
+                    tam_adi = "isim?"
+                meanings.append( ("%d. *%s* " % (idx + 1, tam_adi)) + elem["anlam"] )
+
+            return "\n".join(meanings)
+
+        else:
+            return "Bu ellenmemiş bir hata olabilir, TDK'yı açıp inceleyiniz, sıkıntıyı çözüp gerçekleyiniz."
 
 
 @message_handler("usd", prefix=False)
