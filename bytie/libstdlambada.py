@@ -4,14 +4,16 @@ import numpy
 import random
 import os
 import matplotlib.pyplot as plt
-from dotenv import load_dotenv
 
 
-load_dotenv()
+try:
+    HOST = os.environ["BYTIE_HOST"] 
+    PATH = os.environ["BYTIE_PATH"] 
+except KeyError:
+    HOST = "http://localhost:8000"
+    PATH = "/tmp"
 
-HOST = os.getenv("BYTIE_HOST") or 'http://localhost/'
-PATH = os.getenv("BYTIE_PATH") or './.tmp'
-
+    
 sum = numpy.sum
 mean = numpy.mean
 median = numpy.median

@@ -1,4 +1,3 @@
-from dotenv import load_dotenv
 import ast
 import requests
 import hashlib
@@ -27,10 +26,12 @@ except Exception:
     from . import libstdlambada
 
 
-load_dotenv()
-
-HOST = os.getenv("BYTIE_HOST") or 'http://localhost/'
-PATH = os.getenv("BYTIE_PATH") or './.tmp'
+try:
+    HOST = os.environ["BYTIE_HOST"] 
+    PATH = os.getenv["BYTIE_PATH"]
+except KeyError:
+    HOST = 'http://localhost/'
+    PATH = './.tmp'
 
 # initialize interpreter
 lambadainterpreter = lambada.Interpreter()
