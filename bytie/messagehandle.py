@@ -468,7 +468,7 @@ def bytie_handle_stonks(command: str) -> str:
 def bytie_handle_stock(command: str) -> str:
     "stock {STOCKCODE}: Örnek vereyim, stock GOOG"
     stockinfo = yfinance.Ticker(command)
-    data = stockinfo.history(period="")
+    data = stockinfo.history(period="1d")
 
     if len(data) == 0:
         return "No data found: " + str(command)
