@@ -129,6 +129,6 @@ dmypy.json
 .pyre/
 
 .tmp/
-.bin/**
-.lib64/**
-.share/**
+lib64
+bin
+share
