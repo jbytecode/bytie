@@ -488,7 +488,7 @@ def bytie_handle_datetime(command: str) -> str:
         jsondata = json.loads(capt.text)
         result = jsondata["datetime"]
     except:
-        result = "¯\_(ツ)_/¯ ney?"
+        result = "neey?"
     return result
 
 
